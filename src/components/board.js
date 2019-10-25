@@ -3,9 +3,7 @@ import React from 'react';
 class Field extends React.Component{
 	constructor(props) {
 	    super(props);
-	    this.state = {
-	    	stripBg: '#00DC48',
-	    };
+	    
 	}	
 	render(){
 		const style = { backgroundColor: this.props.colorBg};
@@ -25,9 +23,7 @@ class Board extends React.Component{
 			colorBg: '#fff',
 	    };
 	}
-	getColor(count){
-		if(this.state.value == 0){console.log('yes')}
-	}
+	
 	FillField(){
 		var mas = [];
 		for(var n = 1;n<=8;n++){
