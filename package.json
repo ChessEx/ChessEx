@@ -10,9 +10,10 @@
         "@babel/preset-react": "^7.0.0",
         "babel": "^6.23.0",
         "babel-core": "^6.26.3",
+        "express": "^4.16.4",
         "react": "^16.5.2",
         "react-dom": "^16.5.2",
-        "express": "^4.16.4"
+        "socket.io": "^2.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.1.2",
