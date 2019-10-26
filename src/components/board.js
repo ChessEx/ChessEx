@@ -1,8 +1,14 @@
 import React from 'react';
 
+
+
+
 class Field extends React.Component{
 	constructor(props) {
-	    super(props);	    
+	    super(props);
+	    this.state = {
+			index: this.props.index
+	    };	    
 	}	
 	render(){
 		const style = { backgroundColor: this.props.colorBg};
@@ -20,12 +26,13 @@ class Board extends React.Component{
 			white:'#B2BBC6',
 			black:'#818992',
 			colorBg: '#fff',
+			index: ''
 	    };
 	}
 	
 	FillField(){
 		var mas = [];
-		for(var n = 1;n<=8;n++){
+		for(var n = 8;n>=1;n--){
 			for (var i = 1;i<=8;i++){
 				if(i==1){
 
@@ -37,7 +44,19 @@ class Board extends React.Component{
 				}else{
 					this.state.colorBg = this.state.white;
 				}
-				mas.push(<Field colorBg = {this.state.colorBg}/>);
+				var obj = {
+					1:'a',
+					2:'b',
+					3:'c',
+					4:'d',
+					5:'e',
+					6:'f',
+					7:'g',
+					8:'h'
+				}
+				this.state.index = obj[i] + n.toString();
+
+				mas.push(<Field colorBg = {this.state.colorBg} index = {this.state.index}/>);
 			}
 		}
 		return mas;
@@ -46,7 +65,7 @@ class Board extends React.Component{
 		return(
 			<div className = 'board' id = 'board'>
 				{this.FillField()}
-				
+
 			</div>
 		)
 	}

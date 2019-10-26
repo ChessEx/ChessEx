@@ -9,6 +9,7 @@
 .field{
 	width: 12.5%;
 	padding-top: 12.5%;
+
 }
 .login{
 	position:absolute;
@@ -19,4 +20,9 @@
 	justify-content:center;
 	align-items:center;
 	z-index:999;
+}
+img{
+	width: 100%;
+	margin-bottom: 12.5%;
+
 }
