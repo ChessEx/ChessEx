@@ -1,12 +1,14 @@
 .board{
-	width: 500px;
-	height: 500px;
+	width:50%;
+	margin-left: 25%;
 	display: flex;
 	flex-wrap: wrap;
+	border:2px solid #6f7373;
+	box-shadow: 0px 0px 15px rgba(0,0,0,0.4);
 }
 .field{
 	width: 12.5%;
-	height: 12.5%;
+	padding-top: 12.5%;
 }
 .login{
 	position:absolute;

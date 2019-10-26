@@ -17,8 +17,8 @@ class Board extends React.Component{
 	    super(props);
 	    this.state = {
 			value : 1,
-			white:'#fff',
-			black:'#000',
+			white:'#B2BBC6',
+			black:'#818992',
 			colorBg: '#fff',
 	    };
 	}
@@ -44,8 +44,9 @@ class Board extends React.Component{
 	}
 	render(){
 		return(
-			<div className = 'board'>
+			<div className = 'board' id = 'board'>
 				{this.FillField()}
+				
 			</div>
 		)
 	}
