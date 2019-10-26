@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import React from 'react';
 import Board from './board.js';
+import Login from './login.js';
 
 class App extends React.Component {
 	constructor(props) {
@@ -9,9 +10,9 @@ class App extends React.Component {
     }
 	render(){
 	  	return (
-		  	<div>
+		  	<React.Fragment>
 		  		<Board/>
-		  	</div>
+		  	</React.Fragment>
 	  	)
 	}
 }

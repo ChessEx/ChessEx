@@ -2,8 +2,7 @@ import React from 'react';
 
 class Field extends React.Component{
 	constructor(props) {
-	    super(props);
-	    
+	    super(props);	    
 	}	
 	render(){
 		const style = { backgroundColor: this.props.colorBg};
