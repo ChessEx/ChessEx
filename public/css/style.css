@@ -8,8 +8,10 @@
 }
 .field{
 	width: 12.5%;
-	height: auto;
-
+	height: 12.5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .login{
 	position:absolute;
@@ -25,4 +27,7 @@ img{
 	width: 100%;
 	margin-bottom: 12.5%;
 
+}
+.figure{
+	width: 100px;
 }
