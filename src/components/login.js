@@ -21,7 +21,7 @@ class Login extends React.Component{
 	    axios.post(`${axios.defaults.baseURL}`, { user })
 	      .then(res => {
 	        console.log(res);
-	    })
+	    });
 	}	
 	render(){
 		return(

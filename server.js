@@ -16,6 +16,9 @@ app.use('/public',express.static('public'));
 app.get('/', (req, res) => {
 	res.sendFile('index.html', { root : __dirname});
 });
+app.post('/',(req, res) => {
+	console.log(res,req);
+});
 
 /*app.post('/',codeParser,(req, res) => {
 	console.log(req.body);

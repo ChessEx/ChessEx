@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 
 class Figure extends React.Component{
@@ -59,7 +60,16 @@ class Field extends React.Component{
 	handleClick(e){
 		e.preventDefault();	
 		var name =(this.state.src).slice((this.state.src).length-6,-4) + ' ';
-		console.log(name + this.state.fieldIndex + ' was clicked ');
+		var obj = {
+			nameFig 	: name,
+			idField 	: this.state.fieldIndex,
+			stateField  : this.state.stateField,
+		};
+		axios.post(`http://127.0.0.1:5000/`,obj)
+			.then(res => {
+				console.log(res);
+			})
+		console.log(obj);
 	}
 	render(){
 		const style = { backgroundColor: this.state.colorField};
