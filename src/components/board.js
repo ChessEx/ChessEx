@@ -5,17 +5,13 @@ class Figure extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			FieldFig:this.props.fieldIndex,
-			nameFig:this.props.nameFigure,
+			figId:this.props.figId,
 	    };
-	}
-	namedFig(){
-		return (this.state.nameFig + ' ' + 'figure');
 	}
 	render(){
 		const style = { backgroundColor: this.props.colorBg};
 		return(
-			<img className={this.namedFig()} src={this.props.figure}/>
+			<img src={this.props.figure} className='figure'/>
 		)
 	}
 }
@@ -24,57 +20,51 @@ class Field extends React.Component{
 	constructor(props) {
 	    super(props);
 	    this.state = {
-			figure:'public/images/figures/',
 			fieldIndex:this.props.index,
-			nameFigure:'',
-	    };	    
+			src:'',
+			stateField:false,
+			colorField:this.props.colorBg,
+
+	    };	
+	    this.handleClick = this.handleClick.bind(this);    
 	}
 	getFigure(){
-		var obj = {
-			1:{
-				a:'wR.png',
-				b:'wN.png',
-				c:'wB.png',
-				d:'wQ.png',
-				e:'wK.png',
-				f:'wB.png',
-				g:'wN.png',
-				h:'wR.png'
-			},
-			2:'wP.png',
-			7:'bP.png',
-			8:{
-				a:'bR.png',
-				b:'bN.png',
-				c:'bB.png',
-				d:'bQ.png',
-				e:'bK.png',
-				f:'bB.png',
-				g:'bN.png',
-				h:'bR.png'
-			},
-		};
-		var str1 = (this.state.fieldIndex)[1];
-		var str0 = (this.state.fieldIndex)[0];
-		switch (str1){
-			case '1':
-			case '8':
-				this.state.figure += obj[str1][str0];
-				this.state.nameFigure = obj[str1][str0].slice(0,2)
-				break;
-			case '2':
-			case '7':
-				this.state.figure += obj[str1];	
-				break;
-			default:
-				this.state.figure = '';	
+		var str = this.state.fieldIndex;
+		var obj = { 
+				wP:["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"],
+				bP:["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"],
+				wR:["a1","h1"],
+				bR:["a8","h8"],
+				wN:["b1","g1"],
+				bN:["b8","g8"],
+				wB:["c1","f1"],
+				bB:["c8","f8"],
+				wQ:["d1"],
+				bQ:["d8"],
+				wK:["e1"],
+				bK:["e8"]
+			};
+		for(var key in obj){
+			for(var i = 0;i<obj[key].length;i++){
+				if(obj[key][i] == str){
+					this.state.src = getKey(obj,obj[key]);
+				}
+			}
 		}
-		return <Figure figure = {this.state.figure} fieldIndex = {this.state.fieldIndex} nameFigure = {this.state.nameFigure}/>;
+		function getKey(object, value) {
+		 	return ('/public/images/figures/' + (Object.keys(object).find(key => object[key] === value)).toString() + '.png');
+		}
+		return <Figure figure = {this.state.src} figId = {this.state.fieldIndex}/>;
 	}	
+	handleClick(e){
+		e.preventDefault();	
+		var name =(this.state.src).slice((this.state.src).length-6,-4) + ' ';
+		console.log(name + this.state.fieldIndex + ' was clicked ');
+	}
 	render(){
-		const style = { backgroundColor: this.props.colorBg};
+		const style = { backgroundColor: this.state.colorField};
 		return(
-			<div className = 'field' style = {style} id = {this.props.index}> {this.getFigure()} </div>
+			<div className = 'field' style = {style} id = {this.props.index} onClick={this.handleClick}> {this.getFigure()} </div>
 		)
 	}
 }
