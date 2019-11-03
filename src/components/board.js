@@ -66,9 +66,20 @@ class Field extends React.Component{
 			stateField  : this.state.stateField,
 		};
 		axios.post(`http://127.0.0.1:5000/`,obj)
-			.then(res => {
-				console.log(res);
+			.then(obj => {
+				console.log(obj);
 			})
+		fetch('http://127.0.0.1:5000/',{
+			method: 'POST',
+			body: JSON.stringify({
+				nameFig 	: name,
+				idField 	: this.state.fieldIndex,
+				stateField  : this.state.stateField,
+			}),
+			headers:{
+				'Content-Type': 'applications/json'
+			}
+		}).then(res => res.json()).then((result) => {console.log('good')})
 		console.log(obj);
 	}
 	render(){
