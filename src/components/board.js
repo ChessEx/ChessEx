@@ -60,19 +60,14 @@ class Field extends React.Component{
 	handleClick(e){
 		e.preventDefault();	
 		var name =(this.state.src).slice((this.state.src).length-6,-4) + ' ';
-		var obj = {
+		var params = {
 			nameFig 	: name,
 			idField 	: this.state.fieldIndex,
 			stateField  : this.state.stateField,
 		};
-		fetch('/',{
-			method: 'POST',
-			headers: {
-			    'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				obj
-			})			
+		axios.post('/',{params})
+			.then(res => {
+				console.log(res.data);
 		});
 		//console.log(obj);
 	}
@@ -92,10 +87,9 @@ class Board extends React.Component{
 			white:'#B2BBC6',
 			black:'#818992',
 			colorBg: '#fff',
-			index: ''
+			index: '',
 	    };
 	}
-	
 	FillField(){
 		var mas = [];
 		for(var n = 8;n>=1;n--){
@@ -122,7 +116,7 @@ class Board extends React.Component{
 				}
 				this.state.index = obj[i] + n.toString();
 
-				mas.push(<Field colorBg = {this.state.colorBg} index = {this.state.index}/>);
+				mas.push(<Field colorBg = {this.state.colorBg} index = {this.state.index} connect = {this.state.connect}/>);
 			}
 		}
 		return mas;

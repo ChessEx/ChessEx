@@ -5,6 +5,7 @@ var server  		= require('http').createServer(app);
 var io				= require('socket.io').listen(server);
 var events			= require('events');
 var myEmit			= new events.EventEmitter();
+var countUsers		= 0;
 //var codeParser		= bodyParser.urlencoded({extended:false}); 
 
 let port = process.env.PORT || 5000;
@@ -23,7 +24,13 @@ app.get('/', (req, res) => {
 	res.sendFile('index.html', { root : __dirname});
 });
 app.post('/',(req, res) => {
-	console.log(req.body.obj);
+	req.body.user != undefined ? users.push(req.body.user.name) : console.log(users[users.length-1]);
+	res.contentType('application/json');
+	var obj = {
+		user:users[users.length-1],
+		params:req.body.params
+	};
+	res.send(JSON.stringify(obj));
 });
 
 /*app.post('/',codeParser,(req, res) => {
@@ -42,5 +49,6 @@ io.sockets.on('connection',(socket) => {
 	socket.on('disconnect',(date) => {
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('disconnect');
+		countUsers--;
 	});
 });
