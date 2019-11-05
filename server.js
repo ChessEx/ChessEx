@@ -5,8 +5,6 @@ var server  		= require('http').createServer(app);
 var io				= require('socket.io').listen(server);
 var events			= require('events');
 var myEmit			= new events.EventEmitter();
-var countUsers		= 0;
-//var codeParser		= bodyParser.urlencoded({extended:false}); 
 
 let port = process.env.PORT || 5000;
 server.listen(port, () => {
@@ -16,13 +14,13 @@ server.listen(port, () => {
 
 app.use(express.static(__dirname + '/dist'));
 app.use('/public',express.static('public'));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
 	res.sendFile('index.html', { root : __dirname});
 });
+
 app.post('/',(req, res) => {
 	req.body.user != undefined ? users.push(req.body.user.name) : console.log(users[users.length-1]);
 	res.contentType('application/json');
@@ -32,10 +30,6 @@ app.post('/',(req, res) => {
 	};
 	res.send(JSON.stringify(obj));
 });
-
-/*app.post('/',codeParser,(req, res) => {
-	console.log(req.body);
-});*/
 
 users = [];
 connections = [];
@@ -49,6 +43,5 @@ io.sockets.on('connection',(socket) => {
 	socket.on('disconnect',(date) => {
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('disconnect');
-		countUsers--;
 	});
 });
