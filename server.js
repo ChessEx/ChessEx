@@ -41,7 +41,12 @@ io.sockets.on('connection',(socket) => {
 		res.send(JSON.stringify(obj));
 	});
 
-	socket.on('disconnect',(date) => {
+	socket.on('getIp',(date) => {
+		socket.emit(date,users);
+		socket.emit('disconnect');
+	});
+
+	socket.on('disconnect',(socket) => {
 		connections.splice(connections.indexOf(socket), 1);
 		console.log('disconnect');
 	});
