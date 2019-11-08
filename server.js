@@ -26,7 +26,7 @@ connections = [];
 
 io.sockets.on('connection',(socket) => {
 	console.log('Good connection');
-	var clientIp = socket.request.connection.remoteAddress;
+	var clientIp = (socket.request.connection.remoteAddress).slice(7);
 	console.log(clientIp);
 	connections.push(socket);
 
@@ -35,7 +35,8 @@ io.sockets.on('connection',(socket) => {
 		res.contentType('application/json');
 		var obj = {
 			user:users[clientIp],
-			params:req.body.params
+			params:req.body.params,
+			clientIp:clientIp,
 		};
 		res.send(JSON.stringify(obj));
 	});
