@@ -21,17 +21,7 @@ app.get('/', (req, res) => {
 	res.sendFile('index.html', { root : __dirname});
 });
 
-app.post('/',(req, res) => {
-	req.body.user != undefined ? users.push(req.body.user.name) : console.log(users[users.length-1]);
-	res.contentType('application/json');
-	var obj = {
-		user:users[users.length-1],
-		params:req.body.params
-	};
-	res.send(JSON.stringify(obj));
-});
-
-users = [];
+users = {};
 connections = [];
 
 io.sockets.on('connection',(socket) => {
@@ -39,6 +29,16 @@ io.sockets.on('connection',(socket) => {
 	var clientIp = socket.request.connection.remoteAddress;
 	console.log(clientIp);
 	connections.push(socket);
+
+	app.post('/',(req, res) => {
+		req.body.user != undefined ? users[clientIp] = req.body.user.name: console.log('all good');
+		res.contentType('application/json');
+		var obj = {
+			user:users[clientIp],
+			params:req.body.params
+		};
+		res.send(JSON.stringify(obj));
+	});
 
 	socket.on('disconnect',(date) => {
 		connections.splice(connections.indexOf(socket), 1);
