@@ -28,13 +28,14 @@ io.sockets.on('connection',(socket) => {
 	console.log('Good connection');
 	var clientIp = (socket.request.connection.remoteAddress).slice(7);
 	console.log(clientIp);
+	var conId = Object.keys(socket.nsp.sockets)[0];
 	connections.push(socket);
 
 	app.post('/',(req, res) => {
-		req.body.user != undefined ? users[clientIp] = req.body.user.name: console.log('all good');
+		req.body.user != undefined ? users[conId] = req.body.user.name: console.log('all good');
 		res.contentType('application/json');
 		var obj = {
-			user:users[clientIp],
+			user:users[conId],
 			params:req.body.params,
 			clientIp:clientIp,
 		};
