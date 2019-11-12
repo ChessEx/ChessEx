@@ -17,8 +17,12 @@ app.use('/public',express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.get('/login', (req, res) => {
+	res.sendFile('login.html', { root : __dirname});
+});
+
 app.get('/', (req, res) => {
-	res.sendFile('index.html', { root : __dirname});
+	res.sendFile('index.html',{root : __dirname});
 });
 
 users = {};
