@@ -25,13 +25,8 @@ class Field extends React.Component{
 			src:'',
 			stateField:false,
 			colorField:this.props.colorBg,
-
-	    };	
-	    this.handleClick = this.handleClick.bind(this);    
-	}
-	getFigure(){
-		var str = this.state.fieldIndex;
-		var obj = { 
+			stateField:false,
+			fieldPositions:{ 
 				wP:["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"],
 				bP:["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"],
 				wR:["a1","h1"],
@@ -44,7 +39,15 @@ class Field extends React.Component{
 				bQ:["d8"],
 				wK:["e1"],
 				bK:["e8"]
-			};
+			},
+	    };	
+	    this.handleClick = this.handleClick.bind(this);    
+	}
+	getFigure(){
+		console.log('updating...');
+		var str = this.state.fieldIndex;
+		var obj = this.state.fieldPositions;
+
 		for(var key in obj){
 			for(var i = 0;i<obj[key].length;i++){
 				if(obj[key][i] == str){
@@ -56,9 +59,13 @@ class Field extends React.Component{
 		 	return ('/public/images/figures/' + (Object.keys(object).find(key => object[key] === value)).toString() + '.png');
 		}
 		return <Figure figure = {this.state.src} figId = {this.state.fieldIndex}/>;
-	}	
+	}
 	handleClick(e){
 		e.preventDefault();	
+		/*if(this.state.stateField == false){this.setState({colorField:'#ccffcc'})}else{this.setState({colorField:this.props.colorBg})};
+		console.log(this.state.stateField);
+		console.log(this.state.colorField);
+		this.setState({stateField:!this.state.stateField});*/
 		var name =(this.state.src).slice((this.state.src).length-6,-4) + ' ';
 		var params = {
 			nameFig 	: name,
@@ -68,8 +75,13 @@ class Field extends React.Component{
 		axios.post('/',{params})
 			.then(res => {
 				console.log(res.data);
+				this.setState({fieldPositions:res.data.positions,src:''});			
 		});
-		//console.log(obj);
+		console.log(this.state.fieldPositions);
+		console.log(this.state.src);
+	}//TODO native JS pract maybe working document.(...)
+	shouldComponentUpdate(nextProps, nextState){
+		return this.state.fieldPositions !== this.nextState;
 	}
 	render(){
 		const style = { backgroundColor: this.state.colorField};
@@ -88,6 +100,7 @@ class Board extends React.Component{
 			black:'#818992',
 			colorBg: '#fff',
 			index: '',
+			updateState:false,
 	    };
 	}
 	FillField(){

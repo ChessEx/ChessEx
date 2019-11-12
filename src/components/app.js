@@ -11,7 +11,6 @@ class App extends React.Component {
 	render(){
 	  	return (
 		  	<React.Fragment>
-		  		<Login/>
 		  		<Board/>
 		  	</React.Fragment>
 	  	)
