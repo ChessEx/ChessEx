@@ -1,3 +1,2 @@
-start build.bat
-timeuot /t 5
-start runserver.bat
+call npm run build
+call node server.js
