@@ -79,6 +79,7 @@ class Form extends React.Component {
 			    document.getElementsByClassName('shape')[0].style.transform = "rotate(45deg)";
 			            
 				for(let k = 1;k<6;k++){
+					document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "block";
 				    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "1";
 				}
 			}, 800)
@@ -104,6 +105,7 @@ class Form extends React.Component {
 			}, 400)
 			        
 			for(let k = 1;k<6;k++){
+				document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "none";
 			    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "0";
 			}
 			elem.classList.add('material-button');
