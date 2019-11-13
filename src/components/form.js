@@ -17,15 +17,25 @@ class Form extends React.Component {
 
             };
          }
+
          for(let i =0;i<5;i++){
-            document.getElementsByTagName('input')[i].onblur = function(){
+
+         	
+         		document.getElementsByTagName('input')[i].onblur = function(){
+         	   if(document.getElementsByTagName('input')[i].value == ""){
                this.parentNode.childNodes[0].style.lineHeight = "60px";
                this.parentNode.childNodes[0].style.fontSize = "24px";
                this.parentNode.childNodes[0].style.fontWeight = "300";
                this.parentNode.childNodes[0].style.top = "10px";
                this.parentNode.childNodes[2].style.width = "0%";
-
-         };
+           	   }
+           	   else{
+           	   		this.parentNode.childNodes[2].style.width = "0%";
+           	   }
+         		};
+         	
+         	
+            
       }
 
     }
@@ -120,13 +130,13 @@ class Form extends React.Component {
 				      <div className="title">LOGIN</div>
 				      <div className="input">
 				         <label for="name">Username</label>
-				         <input type="text" name="name" id="name" onFocus = {this.inputAnim}/>
+				         <input type="text" name="name" id="name" autocomplete="off" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
 
 				      <div className="input">
 				         <label for="pass">Password</label>
-				         <input type="password" name="pass" id="pass" onFocus = {this.inputAnim}/>
+				         <input type="password" name="pass" autocomplete="off" id="pass" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
 
@@ -145,19 +155,19 @@ class Form extends React.Component {
 
 				      <div className="input">
 				         <label for="regname">Username</label>
-				         <input type="text" name="regname" id="regname" onFocus = {this.inputAnim}/>
+				         <input type="text" name="regname" id="regname" autocomplete="off" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
 
 				      <div className="input">
 				         <label for="regpass">Password</label>
-				         <input type="password" name="regpass" id="regpass" onFocus = {this.inputAnim}/>
+				         <input type="password" name="regpass" id="regpass" autocomplete="off" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
 
 				      <div className="input">
 				         <label for="reregpass">Repeat Password</label>
-				         <input type="password" name="reregpass" id="reregpass" onFocus = {this.inputAnim}/>
+				         <input type="password" name="reregpass" id="reregpass" autocomplete="off" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
 
