@@ -58,7 +58,58 @@ class Form extends React.Component {
 	        document.getElementsByTagName('button')[0].classList.add('active');
     	}
     	
-    		}
+    }
+    openRegForm(){
+    	var elem = document.getElementById('material-button');   			   			
+    	if(elem.classList.contains('material-button')){
+    		setTimeout(function() {		
+			    document.getElementsByClassName('overbox')[0].style.overflow = 'hidden';
+			    document.getElementsByClassName('box')[0].classList.add('back');   							      
+			}, 200)
+    		setTimeout(function() {		
+			    elem.style.height = "700px";
+			    elem.style.width = "700px";
+			}, 500)
+
+    		elem.classList.add('active');
+			        			        
+			setTimeout(function() {
+			    document.getElementsByClassName('shape')[0].style.width = "50%";
+			    document.getElementsByClassName('shape')[0].style.height = "50%";
+			    document.getElementsByClassName('shape')[0].style.transform = "rotate(45deg)";
+			            
+				for(let k = 1;k<6;k++){
+				    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "1";
+				}
+			}, 800)
+
+			elem.classList.remove('material-button');
+			return 0 ;			     
+    			}
+
+    	if(!elem.classList.contains('material-button')){
+    		document.getElementsByClassName('shape')[0].style.width = "100%";
+			document.getElementsByClassName('shape')[0].style.height = "100%";
+			document.getElementsByClassName('shape')[0].style.transform = "rotate(0deg)";
+
+			setTimeout(function() {		
+			    document.getElementsByClassName('overbox')[0].style.overflow = 'initial'; 							      
+			}, 500)
+
+			elem.style.height = "100px";
+			elem.style.width = "100px";
+			setTimeout(function() {		
+			    document.getElementsByClassName('box')[0].classList.remove('back');
+			    elem.classList.remove('active');						      
+			}, 400)
+			        
+			for(let k = 1;k<6;k++){
+			    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "0";
+			}
+			elem.classList.add('material-button');
+			return 0 ;
+    			}
+    	}
 	render(){
 	  	return (
 		  	
@@ -86,7 +137,7 @@ class Form extends React.Component {
 				   </div>
 
 				   <div className="overbox">
-				      <div className="material-button alt-2"><span className="shape"></span></div>
+				      <div className="material-button alt-2" id="material-button" onClick = {this.openRegForm}><span className="shape"></span></div>
 
 				      <div className="title">REGISTER</div>
 

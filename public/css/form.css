@@ -279,8 +279,9 @@
 .overbox .input {
    z-index: 111;
    position: relative;
+   transition:opacity 300ms;
+   opacity: 0;
    color: #fff !important;
-   display: none;
 }
 
 .overbox .title {
