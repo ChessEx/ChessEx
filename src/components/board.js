@@ -25,7 +25,6 @@ class Field extends React.Component{
 			src:'',
 			stateField:false,
 			colorField:this.props.colorBg,
-			stateField:false,
 			fieldPositions:{ 
 				wP:["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"],
 				bP:["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"],
@@ -44,7 +43,6 @@ class Field extends React.Component{
 	    this.handleClick = this.handleClick.bind(this);    
 	}
 	getFigure(){
-		console.log('updating...');
 		var str = this.state.fieldIndex;
 		var obj = this.state.fieldPositions;
 
@@ -62,11 +60,13 @@ class Field extends React.Component{
 	}
 	handleClick(e){
 		e.preventDefault();	
+		var src = document.querySelector('#' + this.state.fieldIndex + '>img').src;
+		console.log(src);
 		/*if(this.state.stateField == false){this.setState({colorField:'#ccffcc'})}else{this.setState({colorField:this.props.colorBg})};
 		console.log(this.state.stateField);
 		console.log(this.state.colorField);
 		this.setState({stateField:!this.state.stateField});*/
-		var name =(this.state.src).slice((this.state.src).length-6,-4) + ' ';
+		var name = src.split('/').find(item => item.slice(2)=='.png');
 		var params = {
 			nameFig 	: name,
 			idField 	: this.state.fieldIndex,
@@ -75,11 +75,15 @@ class Field extends React.Component{
 		axios.post('/',{params})
 			.then(res => {
 				console.log(res.data);
+				if(res.data.FromTo[0] != null){
+					document.querySelector('#' + String(res.data.FromTo[0]) + '>img').src = '';
+					document.querySelector('#' + String(res.data.FromTo[1]) + '>img').src = this.state.src;
+				};
 				this.setState({fieldPositions:res.data.positions,src:''});			
 		});
-		console.log(this.state.fieldPositions);
-		console.log(this.state.src);
-	}//TODO native JS pract maybe working document.(...)
+		//console.log(this.state.fieldPositions);
+		//console.log(this.state.src);
+	}
 	shouldComponentUpdate(nextProps, nextState){
 		return this.state.fieldPositions !== this.nextState;
 	}

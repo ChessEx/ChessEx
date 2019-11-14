@@ -44,14 +44,20 @@ var defPos = {
 	bK:["e8"]
 };
 function getObj(mas){
-	if(mas[0].nameFig != ' ' && mas[1] != undefined){
+	if(mas[0].nameFig != undefined && mas[1] != undefined){
 		var pos1 = mas[0].idField;
 		var figure = String(mas[0].nameFig).slice(0,2);
 		var pos2 = mas[1].idField;
 		var masp = defPos[figure];
 		masp[masp.indexOf(pos1)] = pos2;
-		return defPos
-	}else{return defPos}
+		return {
+			pos:defPos,
+			FromTo:[pos1,pos2],
+		}
+	}else{return {
+			'pos':defPos,
+			'FromTo':[pos1,pos2],
+		}}
 }
 
 io.sockets.on('connection',(socket) => {
@@ -70,9 +76,10 @@ io.sockets.on('connection',(socket) => {
 			user:users[conId],
 			params:req.body.params,
 			clientIp:clientIp,
-			positions:getObj(paramsCall),
+			positions:getObj(paramsCall)['pos'],
+			FromTo:getObj(paramsCall)['FromTo'],
 		};
-		if(calls == 2){
+		if(calls == 2 || req.body.params.nameFig == undefined){
 			paramsCall = [];
 			calls = 0;
 		}
