@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import React from 'react';
+import axios from 'axios';
 
 class Form extends React.Component {
 	constructor(props) {
@@ -137,7 +138,7 @@ class Form extends React.Component {
     		}
     		if(err == ""){
     			document.getElementById('errors').innerText=err;
-    			$.ajax({
+    			/*$.ajax({
 	    			type : 'POST',
 	    			data : JSON.stringify(data),
 	    			contentType : 'application/json',
@@ -145,7 +146,11 @@ class Form extends React.Component {
 	    			complete : function(data){
 	    				console.log(data.responseJSON);
 	    			}
-    			})
+    			})*/
+    			axios.post('/users',{data})
+    				.then(res => {
+    					console.log(res);
+    				});
     		}
     		else{
     			document.getElementById('errors').innerText=err;

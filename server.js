@@ -43,7 +43,7 @@ app.post('/users', (req, res) => {
 		{	
 			name:req.body.name,
 			pass : req.body.password,
-			repass : req.body.repeatPassword
+			repass : req.body.repeatPassword,
 		}
 	);/* add new user
 	//addInDb({name:'danik'}); //add new user everytime when you go on /users
@@ -51,7 +51,7 @@ app.post('/users', (req, res) => {
 		if(err) return console.log(err);    
     	console.log(result);
 	}); //delete one with gg
-	usersdb.deleteMany({name:'danik'},function(err,result){
+	usersdb.deleteMany({name:/\.},function(err,result){
 		if(err) return console.log(err);    
     	console.log(result);
 	});// delete all with danik*/
@@ -63,6 +63,18 @@ app.post('/users', (req, res) => {
 	    if(err) return console.log(err);
 	    console.log(result);
 	});change all danik on nikita */
+	usersdb.find()
+		.then((user) => res.send(user))
+		.catch((err) => res.send(err));
+});
+app.get('/users',(req, res) => {
+	function resetUsers(){
+		usersdb.deleteMany({name:/./},function(err,result){
+			if(err) return console.log(err);    
+	    	console.log(result);
+		});
+	}
+	//resetUsers(); //use this if you want reset users
 	usersdb.find()
 		.then((user) => res.send(user))
 		.catch((err) => res.send(err)); // this find user in database
