@@ -18,6 +18,15 @@ function mongoConnect(){
 			type:String,
 			required: true,
 		},
+		pass:{
+			type:String,
+			required: true,
+		},
+		repass:{
+			type:String,
+			required: true,
+		},
+		
 	});
 
 	const Users = mongoose.model('Users',UsersSchema);

@@ -122,6 +122,36 @@ class Form extends React.Component {
 			return 0 ;
     			}
     	}
+    	sendData(){
+    		var err = "";
+    		var data = {
+    			name : document.getElementById('regname').value,
+    			password: document.getElementById('regpass').value,
+    			repeatPassword : document.getElementById('reregpass').value
+    		}
+    		if(data.name == "" || data.password == "" || data.repeatPassword == ""){
+    			err += "Не все поля заполнены!" + " ";
+    		}
+    		if(data.password != data.repeatPassword){
+    			err += "Пароли не совпадают!" + " ";
+    		}
+    		if(err == ""){
+    			document.getElementById('errors').innerText=err;
+    			$.ajax({
+	    			type : 'POST',
+	    			data : JSON.stringify(data),
+	    			contentType : 'application/json',
+	    			url : '/users',
+	    			complete : function(data){
+	    				console.log(data.responseJSON);
+	    			}
+    			})
+    		}
+    		else{
+    			document.getElementById('errors').innerText=err;
+    		}
+    		
+    	}
 	render(){
 	  	return (
 		  	
@@ -170,11 +200,12 @@ class Form extends React.Component {
 				         <input type="password" name="reregpass" id="reregpass" autocomplete="off" onFocus = {this.inputAnim}/>
 				         <span className="spin"></span>
 				      </div>
-
-				      <div className="button">
+				     
+				      <div className="button" onClick = {this.sendData}>
 				         <button><span>NEXT</span></button>
 				      </div>
 
+				      <div id="errors"></div>
 
 				   </div>
 

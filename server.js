@@ -37,12 +37,15 @@ function addInDb(NewObj){
 		console.log('Successfully saved');
 	});
 }
-app.get('/users', (req, res) => {
-	/*usersdb.create(
+app.post('/users', (req, res) => {
+	
+	usersdb.create(
 		{	
-			name:'danik',
+			name:req.body.name,
+			pass : req.body.password,
+			repass : req.body.repeatPassword
 		}
-	); add new user
+	);/* add new user
 	//addInDb({name:'danik'}); //add new user everytime when you go on /users
 	/*usersdb.deleteOne({name:'gg'},function(err,result){
 		if(err) return console.log(err);    

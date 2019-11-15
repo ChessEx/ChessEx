@@ -12,7 +12,16 @@
    -ms-transform: scale(1);
    z-index: 5;
 }
-
+#errors{
+   width: 400px;
+   height: 30px;
+   text-align: center;
+   line-height: 30px;
+   color:black;
+   position: absolute;
+   bottom:0;
+   z-index: 200;
+}
 .box.back {
    transform: scale(.95);
    -webkit-transform: scale(.95);
