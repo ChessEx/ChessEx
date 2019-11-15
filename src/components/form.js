@@ -120,7 +120,7 @@ class Form extends React.Component {
 				document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "none";
 			    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "0";
 			}
-			document.getElementsByClassName('overbox')[2].childNodes[k].style.background = "none";
+			document.getElementsByClassName('overbox')[0].childNodes[2].style.background = "none";
 			elem.classList.add('material-button');
 			return 0 ;
     			}
