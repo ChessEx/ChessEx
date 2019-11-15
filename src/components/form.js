@@ -88,10 +88,11 @@ class Form extends React.Component {
 			    document.getElementsByClassName('shape')[0].style.height = "50%";
 			    document.getElementsByClassName('shape')[0].style.transform = "rotate(45deg)";
 			            
-				for(let k = 1;k<6;k++){
+				for(let k = 1;k<7;k++){
 					document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "block";
 				    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "1";
 				}
+
 			}, 800)
 
 			elem.classList.remove('material-button');
@@ -114,10 +115,11 @@ class Form extends React.Component {
 			    elem.classList.remove('active');						      
 			}, 400)
 			        
-			for(let k = 1;k<6;k++){
+			for(let k = 1;k<7;k++){
 				document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "none";
 			    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "0";
 			}
+			document.getElementsByClassName('overbox')[2].childNodes[k].style.background = "none";
 			elem.classList.add('material-button');
 			return 0 ;
     			}
@@ -131,11 +133,16 @@ class Form extends React.Component {
     		}
     		if(data.name == "" || data.password == "" || data.repeatPassword == ""){
     			err += "Не все поля заполнены!" + " ";
+    			document.getElementById('errors').style.background = "red";
     		}
     		if(data.password != data.repeatPassword){
     			err += "Пароли не совпадают!" + " ";
+    			document.getElementById('errors').style.background = "red";
     		}
     		if(err == ""){
+    			document.getElementById('errors').style.background = "#64d864";
+    			document.getElementById('errors').style.color = "black";
+    			err = "Регистрация прошла успешно!"
     			document.getElementById('errors').innerText=err;
     			$.ajax({
 	    			type : 'POST',
@@ -183,6 +190,8 @@ class Form extends React.Component {
 
 				      <div className="title">REGISTER</div>
 
+				      <div id="errors"></div>
+
 				      <div className="input">
 				         <label for="regname">Username</label>
 				         <input type="text" name="regname" id="regname" autocomplete="off" onFocus = {this.inputAnim}/>
@@ -205,7 +214,7 @@ class Form extends React.Component {
 				         <button><span>NEXT</span></button>
 				      </div>
 
-				      <div id="errors"></div>
+				      
 
 				   </div>
 
