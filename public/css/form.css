@@ -13,14 +13,17 @@
    z-index: 5;
 }
 #errors{
-   width: 400px;
-   height: 30px;
-   text-align: center;
-   line-height: 30px;
-   color:black;
+   width: 360px;
+   height: 40px;
+   line-height: 40px;
+   color:#ffd87a;
    position: absolute;
-   bottom:0;
+   bottom:455px;
+   padding-left: 10px;
+   border-radius: 5%;
    z-index: 200;
+   display: none;
+   font-size:15px;
 }
 .box.back {
    transform: scale(.95);
