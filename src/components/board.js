@@ -61,7 +61,6 @@ class Field extends React.Component{
 	handleClick(e){
 		e.preventDefault();	
 		var src = document.querySelector('#' + this.state.fieldIndex + '>img').src;
-		console.log(src);
 		/*if(this.state.stateField == false){this.setState({colorField:'#ccffcc'})}else{this.setState({colorField:this.props.colorBg})};
 		console.log(this.state.stateField);
 		console.log(this.state.colorField);

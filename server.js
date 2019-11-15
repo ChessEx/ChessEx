@@ -1,14 +1,15 @@
 const express 		= require('express');
 const bodyParser 	= require('body-parser');
 const app 			= express();
+const mongo 		= require(__dirname + '/src/functions/mongodb.js');
+const fields 		= require(__dirname + '/src/functions/fields.js');
 var server  		= require('http').createServer(app);
 var io				= require('socket.io').listen(server);
 var events			= require('events');
 var myEmit			= new events.EventEmitter();
 
-let port = process.env.PORT || 5000;
+let port 			= process.env.PORT || 5000;
 server.listen(port, () => {
-	console.log(__dirname);
 	console.log("Listening Port " + port);
 });
 
@@ -23,6 +24,45 @@ app.get('/login', (req, res) => {
 
 app.get('/', (req, res) => {
 	res.sendFile('index.html',{root : __dirname});
+});
+
+MongoParams 		= mongo.connect();
+usersdb 			= MongoParams.Users;
+adj 				= MongoParams.adj.obj;
+
+function addInDb(NewObj){
+	var smthnew = new usersdb(NewObj);
+	smthnew.save((err) => {
+		if(err) throw err;
+		console.log('Successfully saved');
+	});
+}
+app.get('/users', (req, res) => {
+	/*usersdb.create(
+		{	
+			name:'danik',
+		}
+	); add new user
+	//addInDb({name:'danik'}); //add new user everytime when you go on /users
+	/*usersdb.deleteOne({name:'gg'},function(err,result){
+		if(err) return console.log(err);    
+    	console.log(result);
+	}); //delete one with gg
+	usersdb.deleteMany({name:'danik'},function(err,result){
+		if(err) return console.log(err);    
+    	console.log(result);
+	});// delete all with danik*/
+	/*usersdb.updateOne({name:'danik'},{name:'Nikita'}, function(err, result){    
+	    if(err) return console.log(err);
+	    console.log(result);
+	}); change one danik on niktia
+	usersdb.updateMany({name:'danik'},{name:'Nikita'}, function(err, result){    
+	    if(err) return console.log(err);
+	    console.log(result);
+	});change all danik on nikita */
+	usersdb.find()
+		.then((user) => res.send(user))
+		.catch((err) => res.send(err)); // this find user in database
 });
 
 users = {};
@@ -63,7 +103,7 @@ function getObj(mas){
 io.sockets.on('connection',(socket) => {
 	console.log('Good connection');
 	var clientIp = (socket.request.connection.remoteAddress).slice(7);
-	console.log(clientIp);
+	//console.log(clientIp);
 	var conId = Object.keys(socket.nsp.sockets)[0];
 	connections.push(socket);
 
