@@ -81,6 +81,16 @@ app.get('/users',(req, res) => {
 		.catch((err) => res.send(err)); // this find user in database
 });
 
+app.get('/positions', (req, res) => {
+	gamedb.find()
+		.then((game) => res.send(game))
+		.catch((err) => res.send(err));
+});
+
+app.post('/positions', (req, res) => {
+
+});
+
 users = {};
 connections = [];
 var calls = 0;
