@@ -28,7 +28,8 @@ app.get('/', (req, res) => {
 
 MongoParams 		= mongo.connect();
 usersdb 			= MongoParams.Users;
-adj 				= MongoParams.adj.obj;
+gamedb 				= MongoParams.Game;
+//adjUsers 			= MongoParams.adjUsers.obj;
 
 function addInDb(NewObj){
 	var smthnew = new usersdb(NewObj);
@@ -41,9 +42,9 @@ app.post('/users', (req, res) => {
 	
 	usersdb.create(
 		{	
-			name:req.body.name,
-			pass : req.body.password,
-			repass : req.body.repeatPassword,
+			name:req.body.data.name,
+			pass : req.body.data.password,
+			repass : req.body.data.repeatPassword,
 		}
 	);/* add new user
 	//addInDb({name:'danik'}); //add new user everytime when you go on /users
@@ -84,6 +85,8 @@ users = {};
 connections = [];
 var calls = 0;
 paramsCall = [];
+AccessFields = fields.AccessFields;
+
 var defPos = { 
 	wP:["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"],
 	bP:["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"],
@@ -98,6 +101,7 @@ var defPos = {
 	wK:["e1"],
 	bK:["e8"]
 };
+
 function getObj(mas){
 	if(mas[0].nameFig != undefined && mas[1] != undefined){
 		var pos1 = mas[0].idField;
@@ -133,6 +137,7 @@ io.sockets.on('connection',(socket) => {
 			clientIp:clientIp,
 			positions:getObj(paramsCall)['pos'],
 			FromTo:getObj(paramsCall)['FromTo'],
+			accessFields:AccessFields(paramsCall),
 		};
 		if(calls == 2 || req.body.params.nameFig == undefined){
 			paramsCall = [];

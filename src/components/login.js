@@ -6,12 +6,20 @@ class Login extends React.Component{
 		super(props);
 		this.state = {
 			name:'',
+			pass:'',
+			repass:'',
     		visL: '',
   		}
   		this.handleChange = this.handleChange.bind(this);
   		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	handleChange (event) {
+	handleChangeName (event) {
+	    this.setState({ name: event.target.value });
+	}
+	handleChangePass (event) {
+	    this.setState({ name: event.target.value });
+	}
+	handleChangeRepass (event) {
 	    this.setState({ name: event.target.value });
 	}
 	 
@@ -34,9 +42,15 @@ class Login extends React.Component{
 			<div className = 'login' style = {style} >
 				<form onSubmit={this.handleSubmit}>
 					<div className='form-group'>
-						<input className='form-control' name='name' placeholder='username' onChange={this.handleChange} value = {this.state.name}/>
-						<button type='submit' className='btnLoginSub'>OK</button>
+						<input className='form-control' name ='name' placeholder='username' onChange={this.handleChange} value = {this.state.name}/>
 					</div>
+					<div className='form-group'>
+						<input className='form-control' name ='pass' placeholder='password' onChange={this.handleChange} value = {this.state.pass}/>
+					</div>
+					<div className='form-group'>
+						<input className='form-control' name ='repass' placeholder='re-password' onChange={this.handleChange} value = {this.state.repass}/>
+					</div>
+					<button type='submit' className='btnLoginSub'>OK</button>
 				</form>
 			</div>
 		)

@@ -16,24 +16,33 @@ function mongoConnect(){
 	const UsersSchema = new mongoose.Schema({
 		name:{
 			type:String,
-			required: true,
 		},
 		pass:{
 			type:String,
-			required: true,
 		},
 		repass:{
 			type:String,
-			required: true,
 		},
 		
 	});
+	const GamesSchema = new mongoose.Schema({
+		field:{
+			type:Object,
+			required:true,
+		},
+		turn:{
+			type:String,
+			required:true,
+		},
+	});
 
-	const Users = mongoose.model('Users',UsersSchema);
+	const Users 	= mongoose.model('Users',UsersSchema);
+	const Games 	= mongoose.model('Game',GamesSchema);
 
 	return {
 		Users 	 : Users,
-		adj	  	 : UsersSchema, 
+		adjUsers : UsersSchema, 
+		Game 	 : Games,
 		};
 };
 

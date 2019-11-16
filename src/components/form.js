@@ -167,30 +167,29 @@ class Form extends React.Component {
 	render(){
 	  	return (
 		  	
-		  		<div className="materialContainer" id="materialContainer">
-				   <div className="box">
-				      <div className="title">LOGIN</div>
-				      <div className="input">
-				         <label for="name">Username</label>
-				         <input type="text" name="name" id="name" autocomplete="off" onFocus = {this.inputAnim}/>
-				         <span className="spin"></span>
-				      </div>
+		  	<div className="materialContainer" id="materialContainer">
+				<div className="box">
+				    <div className="title">LOGIN</div>
+				    <div className="input">
+				        <label for="name">Username</label>
+				        <input type="text" name="name" id="name" autocomplete="off" onFocus = {this.inputAnim}/>
+				        <span className="spin"></span>
+				    </div>
 
-				      <div className="input">
-				         <label for="pass">Password</label>
-				         <input type="password" name="pass" autocomplete="off" id="pass" onFocus = {this.inputAnim}/>
-				         <span className="spin"></span>
-				      </div>
+				    <div className="input">
+				        <label for="pass">Password</label>
+				        <input type="password" name="pass" autocomplete="off" id="pass" onFocus = {this.inputAnim}/>
+				        <span className="spin"></span>
+				    </div>
 
-				      <div className="button login" id="buttton" onClick = {this.buttonAnim}>
-				         <button><span>GO</span> <i className="fa fa-check"></i></button>
-				      </div>
+				    <div className="button login" id="buttton" onClick = {this.buttonAnim}>
+				       	<button><span>GO</span> <i className="fa fa-check"></i></button>
+				    </div>
 
-				      <a href="" className="pass-forgot">Forgot your password?</a>
+				    <a href="" className="pass-forgot">Forgot your password?</a>
+				</div>
 
-				   </div>
-
-				   <div className="overbox">
+				<div className="overbox">
 				      <div className="material-button alt-2" id="material-button" onClick = {this.openRegForm}><span className="shape"></span></div>
 
 				      <div className="title">REGISTER</div>
@@ -217,13 +216,9 @@ class Form extends React.Component {
 				     
 				      <div className="button" onClick = {this.sendData}>
 				         <button><span>NEXT</span></button>
-				      </div>
-
-				      
-
-				   </div>
-
+				      </div>				   
 				</div>
+			</div>
 	  	)
 	}
 }

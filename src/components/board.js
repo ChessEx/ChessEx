@@ -74,7 +74,7 @@ class Field extends React.Component{
 		axios.post('/',{params})
 			.then(res => {
 				console.log(res.data);
-				if(res.data.FromTo[0] != null){
+				if(res.data.FromTo[1] != null){
 					document.querySelector('#' + String(res.data.FromTo[0]) + '>img').src = '';
 					document.querySelector('#' + String(res.data.FromTo[1]) + '>img').src = this.state.src;
 				};
