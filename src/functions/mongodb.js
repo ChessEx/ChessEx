@@ -37,7 +37,7 @@ async function mongoConnect(){
 	});
 
 	const Users 	= mongoose.model('Users',UsersSchema);
-	const Games 	= mongoose.model('Game',GamesSchema);
+	const Games 	= mongoose.model('Games',GamesSchema);
 
 	return {
 		Users 	 : Users,

@@ -8,7 +8,7 @@ var io				= require('socket.io').listen(server);
 var events			= require('events');
 var myEmit			= new events.EventEmitter();
 
-let port 			= process.env.PORT || 5000;
+let port 			= process.env.PORT || 3000;
 server.listen(port, () => {
 	console.log("Listening Port " + port);
 });
@@ -87,10 +87,6 @@ app.get('/positions', (req, res) => {
 		.catch((err) => res.send(err));
 });
 
-app.post('/positions', (req, res) => {
-
-});
-
 users = {};
 connections = [];
 var calls = 0;
@@ -147,7 +143,7 @@ io.sockets.on('connection',(socket) => {
 			clientIp:clientIp,
 			positions:getObj(paramsCall)['pos'],
 			FromTo:getObj(paramsCall)['FromTo'],
-			accessFields:AccessFields(paramsCall),
+			accessFields:AccessFields(paramsCall,getObj(paramsCall)['pos']),
 		};
 		if(calls == 2 || req.body.params.nameFig == undefined){
 			paramsCall = [];
