@@ -30,12 +30,16 @@ getAccessFields = (obj,pos) => {
 	return {pos1,figure};
 }
 
-var night = (params) => {
-	return {params};
+var night = (params) => {	
+
 }
 
 var pawn = (params) => {
-
+	let pos1  = params[1];
+	let allPos = params[0];
+	let x = pos1[0];
+	let y = pos1[1];
+	if(y==2 || y == 7){return [x+(+y+1),x+(+y+2)]}else{return [x+(+y+1)]};
 }
 
 var rook = (params) => {
