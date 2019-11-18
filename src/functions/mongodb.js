@@ -1,4 +1,4 @@
-async function mongoConnect(){
+function mongoConnect(){
 
 	const mongoose		= require('mongoose');
 
