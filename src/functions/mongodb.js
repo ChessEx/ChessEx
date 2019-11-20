@@ -13,7 +13,7 @@ function mongoConnect(){
 		.then(() => console.log('MongoDb connect'))
 		.catch((err) => console.log(err)); 
 
-	const UsersSchema = new mongoose.Schema({
+const UsersSchema = new mongoose.Schema({
 		name:{
 			type:String,
 		},

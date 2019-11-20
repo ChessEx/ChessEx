@@ -77,9 +77,12 @@ app.get('/users',(req, res) => {
 	}
 	//resetUsers(); //use this if you want reset users
 	usersdb.find()
-		.then((user) => res.send(user))
-		.catch((err) => res.send(err)); // this find user in database
+		.then((user) => {
+			console.log(user.find(item => item['name'] == 'ordinaryask'))
+		})
+		.catch((err) => res.send(err));// this find user in database
 });
+
 
 app.get('/positions', (req, res) => {
 	gamedb.find()
