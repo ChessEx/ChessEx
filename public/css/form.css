@@ -1,6 +1,7 @@
 .box {
    position: relative;
    top: 0;
+   min-width: 350px;
    opacity: 1;
    float: left;
    padding: 60px 50px 40px 50px;
@@ -384,17 +385,17 @@ body {
    background-repeat: no-repeat;
    min-height: 100vh;
    font-family: 'Roboto', sans-serif;
-   animation: bs 30s linear infinite;
+   animation: bs 25s linear infinite;
 }
 @keyframes bs{
    0%{
-      background-size: 100%;
+      background-size: 100% auto;
    }
    50%{
-      background-size: 120%;
+      background-size: 120% auto;
    }
    100%{
-      background-size: 100%;
+      background-size: 100% auto;
    }
 }
 body,

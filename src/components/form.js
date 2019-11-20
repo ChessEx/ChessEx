@@ -1,12 +1,37 @@
 import ReactDOM from "react-dom";
 import React from 'react';
 import axios from 'axios';
+class Input extends React.Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+    
+    render(){
+    	return(
+    		<div className="input">
+				<label for={this.props.name}>{this.props.value}</label>
+				<input type={this.props.type} name={this.props.name}  autocomplete="off" onFocus = {this.props.func} id = {this.props.id} onChange = {this.props.change}/>
+				<span className="spin"></span>
+			</div>
+    	)
+    }
+}
 
 class Form extends React.Component {
 	constructor(props) {
         super(props);
-        this.state = {}
-    }
+        this.newRegName = this.newRegName.bind(this);
+        this.newRegPass = this.newRegPass.bind(this);
+        this.newRegRepass = this.newRegRepass.bind(this);
+        this.sendData = this.sendData.bind(this);
+        this.state = {
+        	regname : "",
+        	regpass : "",
+        	reregpass : ""
+        }
+    } 
     inputAnim(){
     	for(let i =0;i<5;i++){
             document.getElementsByTagName('input')[i].onfocus = function(){
@@ -18,11 +43,8 @@ class Form extends React.Component {
 
             };
          }
-
-         for(let i =0;i<5;i++){
-
-         	
-         		document.getElementsByTagName('input')[i].onblur = function(){
+         for(let i =0;i<5;i++){        	
+         	   document.getElementsByTagName('input')[i].onblur = function(){
          	   if(document.getElementsByTagName('input')[i].value == ""){
                this.parentNode.childNodes[0].style.lineHeight = "60px";
                this.parentNode.childNodes[0].style.fontSize = "24px";
@@ -34,12 +56,9 @@ class Form extends React.Component {
            	   		this.parentNode.childNodes[2].style.width = "0%";
            	   }
          		};
-         	
-         	
-            
-      }
-
-    }
+         	          
+      	}
+  	}  
     buttonAnim(e){
     	if(!document.getElementsByTagName('button')[0].classList.contains('active')){
     		var elem = document.getElementById('buttton');
@@ -71,8 +90,9 @@ class Form extends React.Component {
     	
     }
     openRegForm(){
+    
     	var elem = document.getElementById('material-button');   			   			
-    	if(elem.classList.contains('material-button')){
+    	if(elem.classList.contains('material-button') ){
     		setTimeout(function() {		
 			    document.getElementsByClassName('overbox')[0].style.overflow = 'hidden';
 			    document.getElementsByClassName('box')[0].classList.add('back');   							      
@@ -82,7 +102,7 @@ class Form extends React.Component {
 			    elem.style.width = "700px";
 			}, 500)
 
-    		elem.classList.add('active');
+    		elem.classList.add('active'); 
 			        			        
 			setTimeout(function() {
 			    document.getElementsByClassName('shape')[0].style.width = "50%";
@@ -93,18 +113,20 @@ class Form extends React.Component {
 					document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "block";
 				    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "1";
 				}
-
 			}, 800)
+			setTimeout(function(){elem.classList.remove('material-button');},1050);
 
-			elem.classList.remove('material-button');
-			return 0 ;			     
+		
+				
+			return 0 ;
+					     
     			}
 
     	if(!elem.classList.contains('material-button')){
     		document.getElementsByClassName('shape')[0].style.width = "100%";
 			document.getElementsByClassName('shape')[0].style.height = "100%";
 			document.getElementsByClassName('shape')[0].style.transform = "rotate(0deg)";
-
+			setTimeout(function(){elem.classList.add('material-button');},1100);
 			setTimeout(function() {		
 			    document.getElementsByClassName('overbox')[0].style.overflow = 'initial'; 							      
 			}, 500)
@@ -121,16 +143,25 @@ class Form extends React.Component {
 			    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "0";
 			}
 			document.getElementsByClassName('overbox')[0].childNodes[2].style.background = "none";
-			elem.classList.add('material-button');
+						
 			return 0 ;
     			}
     	}
-    	sendData(){
+    	newRegName(e){
+    		this.state.regname = e.target.value;
+    	}
+    	newRegPass(e){
+    		this.state.regpass = e.target.value;
+    	}
+    	newRegRepass(e){
+    		this.state.regrepass = e.target.value;
+    	}
+    	sendData(){    		
     		var err = "";
     		var data = {
-    			name : document.getElementById('regname').value,
-    			password: document.getElementById('regpass').value,
-    			repeatPassword : document.getElementById('reregpass').value
+    			name : this.state.regname,
+    			password: this.state.regpass,
+    			repeatPassword : this.state.regrepass
     		}
     		if(data.name == "" || data.password == "" || data.repeatPassword == ""){
     			err += "Не все поля заполнены!" + " ";
@@ -170,17 +201,9 @@ class Form extends React.Component {
 		  	<div className="materialContainer" id="materialContainer">
 				<div className="box">
 				    <div className="title">LOGIN</div>
-				    <div className="input">
-				        <label for="name">Username</label>
-				        <input type="text" name="name" id="name" autocomplete="off" onFocus = {this.inputAnim}/>
-				        <span className="spin"></span>
-				    </div>
+				    <Input name = "name" type="text" value = "Username" func = {this.inputAnim} id="name"/>
 
-				    <div className="input">
-				        <label for="pass">Password</label>
-				        <input type="password" name="pass" autocomplete="off" id="pass" onFocus = {this.inputAnim}/>
-				        <span className="spin"></span>
-				    </div>
+				    <Input name = "pass" type="pasword" value = "Password" id="pass" func = {this.inputAnim}/>
 
 				    <div className="button login" id="buttton" onClick = {this.buttonAnim}>
 				       	<button><span>GO</span> <i className="fa fa-check"></i></button>
@@ -196,23 +219,11 @@ class Form extends React.Component {
 
 				      <div id="errors"></div>
 
-				      <div className="input">
-				         <label for="regname">Username</label>
-				         <input type="text" name="regname" id="regname" autocomplete="off" onFocus = {this.inputAnim}/>
-				         <span className="spin"></span>
-				      </div>
+				         <Input name = "regname" type="text" value = "Username" func = {this.inputAnim}  id="regname" change = {this.newRegName}/>
 
-				      <div className="input">
-				         <label for="regpass">Password</label>
-				         <input type="password" name="regpass" id="regpass" autocomplete="off" onFocus = {this.inputAnim}/>
-				         <span className="spin"></span>
-				      </div>
+				      <Input name = "regpass" type="password" value = "Password" func = {this.inputAnim} id="regpass" change = {this.newRegPass}/>
 
-				      <div className="input">
-				         <label for="reregpass">Repeat Password</label>
-				         <input type="password" name="reregpass" id="reregpass" autocomplete="off" onFocus = {this.inputAnim}/>
-				         <span className="spin"></span>
-				      </div>
+				      <Input name = "reregpass" type="repassword" value = "Repeat Password" func = {this.inputAnim} id="reregpass" change = {this.newRegRepass}/>
 				     
 				      <div className="button" onClick = {this.sendData}>
 				         <button><span>NEXT</span></button>
