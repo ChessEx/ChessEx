@@ -25,11 +25,16 @@ class Form extends React.Component {
         this.newRegName = this.newRegName.bind(this);
         this.newRegPass = this.newRegPass.bind(this);
         this.newRegRepass = this.newRegRepass.bind(this);
+        this.newUsername = this.newUsername.bind(this);
+        this.newPassword = this.newPassword.bind(this);
         this.sendData = this.sendData.bind(this);
+        this.checkData = this.checkData.bind(this);
         this.state = {
         	regname : "",
         	regpass : "",
-        	reregpass : ""
+        	reregpass : "",
+        	logname:"",
+        	logpass:""
         }
     } 
     inputAnim(){
@@ -92,7 +97,8 @@ class Form extends React.Component {
     openRegForm(){
     
     	var elem = document.getElementById('material-button');   			   			
-    	if(elem.classList.contains('material-button') ){
+    	if(elem.classList.contains('material-button')&&!elem.classList.contains('process')){
+    		elem.classList.add('process');
     		setTimeout(function() {		
 			    document.getElementsByClassName('overbox')[0].style.overflow = 'hidden';
 			    document.getElementsByClassName('box')[0].classList.add('back');   							      
@@ -113,6 +119,7 @@ class Form extends React.Component {
 					document.getElementsByClassName('overbox')[0].childNodes[k].style.display = "block";
 				    document.getElementsByClassName('overbox')[0].childNodes[k].style.opacity = "1";
 				}
+				elem.classList.remove('process');
 			}, 800)
 			setTimeout(function(){elem.classList.remove('material-button');},1050);
 
@@ -122,11 +129,12 @@ class Form extends React.Component {
 					     
     			}
 
-    	if(!elem.classList.contains('material-button')){
+    	if(!elem.classList.contains('material-button')&&!elem.classList.contains('process')){
     		document.getElementsByClassName('shape')[0].style.width = "100%";
 			document.getElementsByClassName('shape')[0].style.height = "100%";
+			document.getElementById('errors').innerText = "";
 			document.getElementsByClassName('shape')[0].style.transform = "rotate(0deg)";
-			setTimeout(function(){elem.classList.add('material-button');},1100);
+			setTimeout(function(){elem.classList.add('material-button');},600);
 			setTimeout(function() {		
 			    document.getElementsByClassName('overbox')[0].style.overflow = 'initial'; 							      
 			}, 500)
@@ -155,6 +163,28 @@ class Form extends React.Component {
     	}
     	newRegRepass(e){
     		this.state.regrepass = e.target.value;
+    	}
+    	newPassword(e){
+    		this.state.logpass = e.target.value;
+    	}
+    	newUsername(e){
+    		this.state.logname = e.target.value;
+    	}
+    	checkData(){
+    		var errr = "";
+    		var data = {
+    			name : this.state.logname,
+    			password: this.state.logpass
+    		}
+    		if(data.name == "" || data.password == "" || data.repeatPassword == ""){
+    			errr += "Не все поля заполнены!" + " ";
+    		}
+    		if(errr == ""){    		
+    			axios.post('/loginCheck',{data})
+    				.then(res => {
+    					console.log(res.data);
+    				});
+    		}
     	}
     	sendData(){    		
     		var err = "";
@@ -201,12 +231,12 @@ class Form extends React.Component {
 		  	<div className="materialContainer" id="materialContainer">
 				<div className="box">
 				    <div className="title">LOGIN</div>
-				    <Input name = "name" type="text" value = "Username" func = {this.inputAnim} id="name"/>
+				    <Input name = "name" type="text" value = "Username" func = {this.inputAnim} id="name" change = {this.newUsername}/>
 
-				    <Input name = "pass" type="pasword" value = "Password" id="pass" func = {this.inputAnim}/>
+				    <Input name = "pass" type="pasword" value = "Password" id="pass" func = {this.inputAnim} change = {this.newPassword}/>
 
 				    <div className="button login" id="buttton" onClick = {this.buttonAnim}>
-				       	<button><span>GO</span> <i className="fa fa-check"></i></button>
+				       	<button onClick = {this.checkData}><span>GO</span> <i className="fa fa-check"></i></button>
 				    </div>
 
 				    <a href="" className="pass-forgot">Forgot your password?</a>
@@ -223,7 +253,7 @@ class Form extends React.Component {
 
 				      <Input name = "regpass" type="password" value = "Password" func = {this.inputAnim} id="regpass" change = {this.newRegPass}/>
 
-				      <Input name = "reregpass" type="repassword" value = "Repeat Password" func = {this.inputAnim} id="reregpass" change = {this.newRegRepass}/>
+				      <Input name = "reregpass" type="password" value = "Repeat Password" func = {this.inputAnim} id="reregpass" change = {this.newRegRepass}/>
 				     
 				      <div className="button" onClick = {this.sendData}>
 				         <button><span>NEXT</span></button>
