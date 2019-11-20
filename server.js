@@ -46,9 +46,9 @@ app.post('/users', (req, res) => {
 			pass : req.body.data.password,
 			repass : req.body.data.repeatPassword,
 		}
-	);/* add new user
+	); /*add new user
 	//addInDb({name:'danik'}); //add new user everytime when you go on /users
-	/*usersdb.deleteOne({name:'gg'},function(err,result){
+	usersdb.deleteOne({name:'gg'},function(err,result){
 		if(err) return console.log(err);    
     	console.log(result);
 	}); //delete one with gg
@@ -68,6 +68,16 @@ app.post('/users', (req, res) => {
 		.then((user) => res.send(user))
 		.catch((err) => res.send(err));
 });
+
+app.post('/loginCheck', (req, res) => {
+
+	usersdb.find()
+	.then((user) => res.send(user.find(item => item['name'] == req.body.data.name && item['pass'] == req.body.data.password)))
+	.catch((err) => res.send(err));
+	});
+	
+
+
 app.get('/users',(req, res) => {
 	function resetUsers(){
 		usersdb.deleteMany({name:/./},function(err,result){
