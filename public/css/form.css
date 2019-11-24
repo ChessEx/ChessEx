@@ -16,7 +16,21 @@
    width: 360px;
    height: 40px;
    line-height: 40px;
-   color:#ffd87a;
+   color:black;
+   position: absolute;
+   bottom:455px;
+   padding-left: 10px;
+   border-radius: 5%;
+   z-index: 200;
+   display: none;
+   font-size:15px;
+}
+
+#errorss{
+   width: 360px;
+   height: 40px;
+   line-height: 40px;
+   color:black;
    position: absolute;
    bottom:455px;
    padding-left: 10px;
@@ -384,14 +398,14 @@ body {
    background-repeat: no-repeat;
    min-height: 100vh;
    font-family: 'Roboto', sans-serif;
-   animation: bs 25s linear infinite;
+   animation: bs 30s linear infinite;
 }
 @keyframes bs{
    0%{
       background-size: 100% 100%;
    }
    50%{
-      background-size: 120% 120%;
+      background-size: 120% 125%;
    }
    100%{
       background-size: 100% 100%;

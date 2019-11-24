@@ -65,7 +65,8 @@ class Form extends React.Component {
       	}
   	}  
     buttonAnim(e){
-    	if(!document.getElementsByTagName('button')[0].classList.contains('active')){
+    	console.log(document.getElementById('errorss').textContent);
+    	if(!document.getElementsByTagName('button')[0].classList.contains('active') && document.getElementById('errorss').textContent == ""){
     		var elem = document.getElementById('buttton');
     	var i = 0,k=0;
 	    	var pX = e.pageX,
@@ -170,19 +171,37 @@ class Form extends React.Component {
     	newUsername(e){
     		this.state.logname = e.target.value;
     	}
-    	checkData(){
-    		var errr = "";
+    	checkData(e){
+    		var errr = ".";
     		var data = {
     			name : this.state.logname,
     			password: this.state.logpass
     		}
     		if(data.name == "" || data.password == "" || data.repeatPassword == ""){
     			errr += "Не все поля заполнены!" + " ";
+    			document.getElementById('errorss').style.background = "red";
+    			document.getElementById('errorss').innerText = errr;
+    			document.getElementById('errorss').style.display = "block";
     		}
-    		if(errr == ""){    		
+    		else{
+    			document.getElementById('errorss').innerText = errr;
+    		}
+    		if(errr == "."){    		
     			axios.post('/loginCheck',{data})
     				.then(res => {
-    					console.log(res.data);
+    				
+    					if(res.data ==  "0"){
+    						errr="Неверные логин или пароль";
+    						document.getElementById('errorss').style.background = "red";
+    						document.getElementById('errorss').innerText = errr;
+    						document.getElementById('errorss').style.display = "block";
+    					}
+    					else{
+    						errr = "";
+    						document.getElementById('errorss').style.display = "none";
+    						document.getElementById('errorss').innerText = "";
+ 
+    					}
     				});
     		}
     	}
@@ -201,11 +220,23 @@ class Form extends React.Component {
     			err += "Пароли не совпадают!" + " ";
     			document.getElementById('errors').style.background = "red";
     		}
-    		if(err == ""){
-    			document.getElementById('errors').style.background = "#64d864";
-    			document.getElementById('errors').style.color = "black";
-    			err = "Регистрация прошла успешно!"
-    			document.getElementById('errors').innerText=err;
+
+    		if(err == "" ){
+    			axios.post('/users',{data})
+    				.then(res => {
+    					if(res.data == "0"){err = "Имя пользователя уже занято!" }
+    					else {err = "Регистрация прошла успешно!"}
+    						if(err[0]=="И"){document.getElementById('errors').style.background = "red";document.getElementById('errors').innerText=err;}
+    						else {
+    							document.getElementById('errors').style.background = "#64d864";    			
+    							document.getElementById('errors').innerText=err;
+    							document.getElementById('regname').value = "";
+    							document.getElementById('regpass').value = "";
+    							document.getElementById('reregpass').value = "";
+    						}
+    						document.getElementById('errors').style.color = "black";
+    			});
+    			
     			/*$.ajax({
 	    			type : 'POST',
 	    			data : JSON.stringify(data),
@@ -215,10 +246,8 @@ class Form extends React.Component {
 	    				console.log(data.responseJSON);
 	    			}
     			})*/
-    			axios.post('/users',{data})
-    				.then(res => {
-    					console.log(res);
-    				});
+    			
+    				
     		}
     		else{
     			document.getElementById('errors').innerText=err;
@@ -231,9 +260,10 @@ class Form extends React.Component {
 		  	<div className="materialContainer" id="materialContainer">
 				<div className="box">
 				    <div className="title">LOGIN</div>
+				    <div id="errorss"></div>
 				    <Input name = "name" type="text" value = "Username" func = {this.inputAnim} id="name" change = {this.newUsername}/>
 
-				    <Input name = "pass" type="pasword" value = "Password" id="pass" func = {this.inputAnim} change = {this.newPassword}/>
+				    <Input name = "pass" type="password" value = "Password" id="pass" func = {this.inputAnim} change = {this.newPassword}/>
 
 				    <div className="button login" id="buttton" onClick = {this.buttonAnim}>
 				       	<button onClick = {this.checkData}><span>GO</span> <i className="fa fa-check"></i></button>

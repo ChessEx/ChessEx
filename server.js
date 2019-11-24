@@ -40,13 +40,31 @@ function addInDb(NewObj){
 }
 app.post('/users', (req, res) => {
 	
-	usersdb.create(
-		{	
-			name:req.body.data.name,
-			pass : req.body.data.password,
-			repass : req.body.data.repeatPassword,
+	usersdb.find({'name':req.body.data.name})
+	.then((user) => {
+		
+		if(user.length == 0){
+			usersdb.create(
+				{	
+					name:req.body.data.name,
+					pass : req.body.data.password,
+					repass : req.body.data.repeatPassword,
+				}
+				
+			);
+			usersdb.find()
+				.then((user) => res.send(user))
+				.catch((err) => res.send(err));
 		}
-	); /*add new user
+		else{
+			res.send("0");
+		}
+		
+	})
+	.catch((err) => res.send(err));
+	
+	
+	 /*add new user
 	//addInDb({name:'danik'}); //add new user everytime when you go on /users
 	usersdb.deleteOne({name:'gg'},function(err,result){
 		if(err) return console.log(err);    
@@ -64,17 +82,24 @@ app.post('/users', (req, res) => {
 	    if(err) return console.log(err);
 	    console.log(result);
 	});change all danik on nikita */
-	usersdb.find()
-		.then((user) => res.send(user))
-		.catch((err) => res.send(err));
+	
 });
 
 app.post('/loginCheck', (req, res) => {
 
-	usersdb.find()
-	.then((user) => res.send(user.find(item => item['name'] == req.body.data.name && item['pass'] == req.body.data.password)))
+	usersdb.find({'name':req.body.data.name,'pass':req.body.data.password})
+	.then((user) => {console.log(user);
+		if(user.length == 0)res.send("0");
+		else res.send(user);
+	})
 	.catch((err) => res.send(err));
 	});
+/*app.post('/loginCheckreg', (req, res) => {
+
+	usersdb.find()
+	.then((user) => res.send(user.find(item => item['name'] == req.body.data.name)))
+	.catch((err) => res.send(err));
+	});*/
 	
 
 
