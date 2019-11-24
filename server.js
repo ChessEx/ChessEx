@@ -89,17 +89,17 @@ app.post('/loginCheck', (req, res) => {
 
 	usersdb.find({'name':req.body.data.name,'pass':req.body.data.password})
 	.then((user) => {console.log(user);
-		if(user.length == 0)res.send("0");
-		else res.send(user);
+		if(user.length == 0){
+			res.send("0");
+		}
+		else {
+			res.redirect('/');
+		}
 	})
 	.catch((err) => res.send(err));
 	});
-/*app.post('/loginCheckreg', (req, res) => {
 
-	usersdb.find()
-	.then((user) => res.send(user.find(item => item['name'] == req.body.data.name)))
-	.catch((err) => res.send(err));
-	});*/
+
 	
 
 

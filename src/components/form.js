@@ -64,37 +64,6 @@ class Form extends React.Component {
          	          
       	}
   	}  
-    buttonAnim(e){
-    	console.log(document.getElementById('errorss').textContent);
-    	if(!document.getElementsByTagName('button')[0].classList.contains('active') && document.getElementById('errorss').textContent == ""){
-    		var elem = document.getElementById('buttton');
-    	var i = 0,k=0;
-	    	var pX = e.pageX,
-	         	pY = e.pageY,
-	         	oX = parseInt(elem.getBoundingClientRect().left),
-	         	oY = parseInt(elem.getBoundingClientRect().top);
-
-	        elem.insertAdjacentHTML("beforeEnd",'<div class="click-efect x-' + oX + ' y-' + oY +
-	         '" style="margin-left:' + (pX - oX) + 'px;margin-top:' + (pY - oY) + 
-	         'px;"></div>');
-	        function anim(){
-	        	i+=2;
-	        	document.getElementsByClassName('click-efect')[0].style.width = i+"px";
-	        	document.getElementsByClassName('click-efect')[0].style.height = i+"px";
-	        	if(i == 500)clearInterval(s);
-	        	if(k>-250)k--;
-	        	document.getElementsByClassName('click-efect')[0].style.top = k+"px";
-	            document.getElementsByClassName('click-efect')[0].style.left = k+"px";
-	        	
-	        }
-	        
-	        var s = setInterval(anim,2);
-	        
-
-	        document.getElementsByTagName('button')[0].classList.add('active');
-    	}
-    	
-    }
     openRegForm(){
     
     	var elem = document.getElementById('material-button');   			   			
@@ -172,7 +141,12 @@ class Form extends React.Component {
     		this.state.logname = e.target.value;
     	}
     	checkData(e){
-    		var errr = ".";
+    		var elem = document.getElementById('buttton'),
+    			pX = e.pageX,
+	         	pY = e.pageY,
+	         	oX = parseInt(elem.getBoundingClientRect().left),
+	         	oY = parseInt(elem.getBoundingClientRect().top);
+    		var errr = "";
     		var data = {
     			name : this.state.logname,
     			password: this.state.logpass
@@ -183,10 +157,7 @@ class Form extends React.Component {
     			document.getElementById('errorss').innerText = errr;
     			document.getElementById('errorss').style.display = "block";
     		}
-    		else{
-    			document.getElementById('errorss').innerText = errr;
-    		}
-    		if(errr == "."){    		
+    		if(errr == ""){    		
     			axios.post('/loginCheck',{data})
     				.then(res => {
     				
@@ -200,6 +171,29 @@ class Form extends React.Component {
     						errr = "";
     						document.getElementById('errorss').style.display = "none";
     						document.getElementById('errorss').innerText = "";
+    						if(!document.getElementsByTagName('button')[0].classList.contains('active')){
+					    		
+					    		var i = 0,k=0;
+						        elem.insertAdjacentHTML("beforeEnd",'<div class="click-efect x-' + oX + ' y-' + oY +
+						         '" style="margin-left:' + (pX - oX) + 'px;margin-top:' + (pY - oY) + 
+						         'px;"></div>');
+						        function anim(){
+						        	i+=2;
+						        	document.getElementsByClassName('click-efect')[0].style.width = i+"px";
+						        	document.getElementsByClassName('click-efect')[0].style.height = i+"px";
+						        	if(i == 500)clearInterval(s);
+						        	if(k>-250)k--;
+						        	document.getElementsByClassName('click-efect')[0].style.top = k+"px";
+						            document.getElementsByClassName('click-efect')[0].style.left = k+"px";
+	        	
+	        				}
+	        				
+	        
+	        var s = setInterval(anim,2);
+	        
+
+	        document.getElementsByTagName('button')[0].classList.add('active');
+    	}
  
     					}
     				});
