@@ -86,14 +86,14 @@ app.post('/users', (req, res) => {
 });
 
 app.post('/loginCheck', (req, res) => {
-
+	var h = false;
 	usersdb.find({'name':req.body.data.name,'pass':req.body.data.password})
 	.then((user) => {console.log(user);
 		if(user.length == 0){
 			res.send("0");
 		}
-		else {
-			res.redirect('/');
+		else{
+			res.send(user);
 		}
 	})
 	.catch((err) => res.send(err));

@@ -157,7 +157,8 @@ class Form extends React.Component {
     			document.getElementById('errorss').innerText = errr;
     			document.getElementById('errorss').style.display = "block";
     		}
-    		if(errr == ""){    		
+    		if(errr == ""){ 
+
     			axios.post('/loginCheck',{data})
     				.then(res => {
     				
@@ -178,21 +179,22 @@ class Form extends React.Component {
 						         '" style="margin-left:' + (pX - oX) + 'px;margin-top:' + (pY - oY) + 
 						         'px;"></div>');
 						        function anim(){
-						        	i+=2;
+						        	i+=4;
 						        	document.getElementsByClassName('click-efect')[0].style.width = i+"px";
 						        	document.getElementsByClassName('click-efect')[0].style.height = i+"px";
 						        	if(i == 500)clearInterval(s);
-						        	if(k>-250)k--;
+						        	if(k>-250)k-=2;
 						        	document.getElementsByClassName('click-efect')[0].style.top = k+"px";
 						            document.getElementsByClassName('click-efect')[0].style.left = k+"px";
-	        	
+	        						setTimeout(function(){window.location = "/";},350) ;
 	        				}
-	        				
+
 	        
-	        var s = setInterval(anim,2);
+	        var s = setInterval(anim,1);
 	        
 
 	        document.getElementsByTagName('button')[0].classList.add('active');
+
     	}
  
     					}
