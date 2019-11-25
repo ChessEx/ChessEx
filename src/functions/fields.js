@@ -17,7 +17,6 @@ getAccessFields = (obj,pos) => {
 		'g'	: 7,
 		'h' : 8,
 	}
-
 	var getF = () => {
 		switch (figureType){
 			case 'P' :
@@ -92,18 +91,50 @@ var pawn = (params) => {
 
 var rook = (params) => {
 	let pos1  = params[1];
+	let near = nFields(pos1);
+	let dX;
+	let dY;
 	let allPos = params[0];
 	let color = params[2];
+
 	let trans = params[3];
 	let x = pos1[0];
 	let y = pos1[1];
-	let res = [];
-	for(var key in trans){
-		res.push(key+y);
-		res.push(x+trans[key]);
+	function getKey(object, value){
+		return Object.keys(object).find(key => object[key] === value);
 	}
-	res = res.filter(item => item != pos1).sort();
-	return res;
+	for(var key in allPos){
+		if(key[0] == color){
+			near = near.filter(item => !allPos[key].includes(item));
+		}
+	}
+	var res = near.filter(item => {
+		let dX = Math.abs(trans[item[0]] - trans[x]);
+		let dY = Math.abs(item[1] - y);
+		if( (dX > 0 && dY == 0) || (dX == 0 && dY > 0) == true){
+			return true;
+		}else{return false}
+	});
+	function filterR(mas){
+		return mas.filter(item => {
+			let dX = Math.abs(trans[item[0]] - trans[x]);
+			let dY = Math.abs(item[1] - y);
+			if( (dX > 0 && dY == 0) || (dX == 0 && dY > 0) == true){
+				return true;
+			}else{return false}
+		});
+	}
+	function rkFilter(mas){
+		mas1 = mas;
+		mas = mas.map(item => nFields(item,pos1,allPos,color));
+		mas = convert(mas);
+		mas = unique(mas).sort();
+		mas = filterR(mas);
+		if(mas1.join() == mas.join()){res = mas;return 0;}
+		rkFilter(mas);
+	}
+	rkFilter(res);
+	return (res);
 }
 
 var bishop = (params) => {
@@ -174,6 +205,56 @@ var queen = (params) => {
 	}
 	res = res.filter(item => item != pos1).sort();
 	return res;
+}
+
+var nFields = (field,fpos,allPos,color) => {
+	let pos1 = fpos;
+	let trans = {
+		'a' : 1,
+		'b'	: 2,
+		'c' : 3,
+		'd'	: 4,
+		'e'	: 5,
+		'f'	: 6,
+		'g'	: 7,
+		'h' : 8,
+	};
+	let x = field[0];
+	let y = field[1];
+	let prevX = getKey(trans,trans[x] - 1);
+	let nextX = getKey(trans,trans[x] + 1);
+
+	function getKey(object, value){
+		return Object.keys(object).find(key => object[key] === value);
+	}
+	let res = [prevX+y,nextX+y,prevX + (+y+1),nextX + (+y+1),x + (+y+1),prevX + (+y-1),nextX + (+y-1),x + (+y-1)].filter(item => (item[1] > 0) && (item[1] < 9) && (item != pos1) && (item != field));
+	for(var key in allPos){
+		if(key[0] == color){
+			res = res.filter(item => !allPos[key].includes(item));
+		}
+	}
+	return res;
+}
+
+function convert(array){
+	let res=[];
+	for (var i=0; i<array.length; i++){
+		if (!Array.isArray(array[i])){
+		   res.push(array[i]);
+		}
+		else{
+		   res=res.concat(convert(array[i]));
+		}
+	}
+	return res;
+}
+
+function unique(mas){
+	let obj = {};
+	for(var i = 0;i<mas.length;i++){
+		obj[mas[i]] = ''
+	}
+	return Object.keys(obj);
 }
 
 module.exports  = {

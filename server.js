@@ -1,7 +1,7 @@
 const express 		= require('express');
 const bodyParser 	= require('body-parser');
 const app 			= express();
-const mongo 		= require(__dirname + '/src/functions/mongodb.js');
+ const mongo 		= require(__dirname + '/src/functions/mongodb.js');
 const fields 		= require(__dirname + '/src/functions/fields.js');
 var server  		= require('http').createServer(app);
 var io				= require('socket.io').listen(server);
@@ -20,10 +20,6 @@ app.use(bodyParser.json());
 
 app.get('/login', (req, res) => {
 	res.sendFile('login.html', { root : __dirname});
-});
-
-app.get('/', (req, res) => {
-	res.sendFile('index.html',{root : __dirname});
 });
 
 MongoParams 		= mongo.connect();
@@ -97,11 +93,7 @@ app.post('/loginCheck', (req, res) => {
 		}
 	})
 	.catch((err) => res.send(err));
-	});
-
-
-	
-
+});
 
 app.get('/users',(req, res) => {
 	function resetUsers(){
@@ -162,6 +154,10 @@ function getObj(mas){
 			'FromTo':[pos1,pos2],
 		}}
 }
+
+app.get('/', (req, res) => {
+	res.sendFile('index.html',{root : __dirname});
+});
 
 io.sockets.on('connection',(socket) => {
 	console.log('Good connection');
