@@ -249,7 +249,6 @@ function getAFields(field){
 	};
 	let x = field[0];
 	let y = field[1];
-	for (var i = )
 }
 
 function convert(array){
