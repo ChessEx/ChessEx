@@ -1,7 +1,7 @@
 const express 		= require('express');
 const bodyParser 	= require('body-parser');
 const app 			= express();
- const mongo 		= require(__dirname + '/src/functions/mongodb.js');
+const mongo 		= require(__dirname + '/src/functions/mongodb.js');
 const fields 		= require(__dirname + '/src/functions/fields.js');
 var server  		= require('http').createServer(app);
 var io				= require('socket.io').listen(server);

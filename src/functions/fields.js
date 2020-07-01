@@ -235,6 +235,22 @@ var nFields = (field,fpos,allPos,color) => {
 	}
 	return res;
 }
+var acf = [];
+function getAFields(field){
+	let trans = {
+		'a' : 1,
+		'b'	: 2,
+		'c' : 3,
+		'd'	: 4,
+		'e'	: 5,
+		'f'	: 6,
+		'g'	: 7,
+		'h' : 8,
+	};
+	let x = field[0];
+	let y = field[1];
+	for (var i = )
+}
 
 function convert(array){
 	let res=[];
